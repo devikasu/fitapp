@@ -16,7 +16,6 @@
             position: relative;
         }
 
-        /* Moves everything except the image to the top */
         .top-container {
             width: 100%;
             display: flex;
@@ -25,12 +24,11 @@
             margin-top: 20px;
         }
 
-        /* Centered Image */
         .middle-image {
-            width: 120px; /* Adjust size as needed */
+            width: 120px;
             height: auto;
             position: absolute;
-            top: 50%; /* Centering */
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
@@ -58,12 +56,13 @@
 
         .slider-bar {
             height: 100%;
+            width: 0%;
             background: repeating-linear-gradient(
                 45deg, 
                 #FF69B4 0px, #FF69B4 10px, 
                 #B0B0B0 10px, #B0B0B0 20px
             );
-            transition: width 0.5s ease-in-out;
+            transition: width 0.5s ease-in-out, background 0.5s ease-in-out;
             image-rendering: pixelated;
         }
 
@@ -94,6 +93,8 @@
 
         .doughnut-box {
             margin-top: 10px;
+            pointer-events: none; /* Initially disable clicking */
+            opacity: 0.5; /* Make it look disabled */
         }
 
         .icon-box:hover {
@@ -102,6 +103,11 @@
                 #FF69B4 0px, #FF69B4 5px, 
                 #B0B0B0 5px, #B0B0B0 10px
             );
+        }
+
+        .active {
+            pointer-events: auto !important; /* Enable clicking */
+            opacity: 1 !important; /* Restore visibility */
         }
     </style>
 </head>
@@ -115,17 +121,27 @@
             
             <div class="icon-container">
                 <div class="icon-box" onclick="window.location.href='settings.html'">⚙</div> 
-                <div class="icon-box doughnut-box" onclick="startEating()">🍩</div>
+                <div class="icon-box doughnut-box" id="doughnutButton" onclick="startEating()">🍩</div>
             </div>
         </div>
     </div>
 
-    <img src="../eat.png" id="foodImage" alt="Eat Icon" class="middle-image"> <!-- Centered Image -->
+    <img src="../eat.png" id="foodImage" alt="Eat Icon" class="middle-image">
 
     <script>
         function updateBar(value) {
             const bar = document.getElementById("slider");
+            const doughnutButton = document.getElementById("doughnutButton");
+
             bar.style.width = value + "%";
+            
+            if (value >= 50) {
+                bar.style.background = "navy";
+                doughnutButton.classList.add("active"); // Enable button
+            } else {
+                bar.style.background = "repeating-linear-gradient(45deg, #FF69B4 0px, #FF69B4 10px, #B0B0B0 10px, #B0B0B0 20px)";
+                doughnutButton.classList.remove("active"); // Disable button
+            }
         }
 
         let progress = 0;
@@ -135,20 +151,22 @@
         }, 2000);
 
         function startEating() {
+            const doughnutButton = document.getElementById("doughnutButton");
+            if (!doughnutButton.classList.contains("active")) return; // Prevent clicking early
+
             const image = document.getElementById("foodImage");
             const images = ["../nom.png", "../doonut.png", "../eat.png"];
             let count = 0;
 
             function cycleImages() {
-                if (count < 9) { // Loop three times (3 images per loop)
-                    image.src = images[count % 3]; // Cycle through the array
+                if (count < 9) {
+                    image.src = images[count % 3];
                     count++;
-                    setTimeout(cycleImages, 500); // Change every 0.5 seconds
+                    setTimeout(cycleImages, 500);
                 }
             }
             cycleImages();
         }
     </script>
-
 </body>
 </html>

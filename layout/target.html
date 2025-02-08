@@ -17,7 +17,7 @@
             font-family: 'Press Start 2P', cursive;
         }
 
-        .popup-container {
+        .popup-container, .confirmation-popup {
             display: none;
             position: fixed;
             top: 50%;
@@ -31,12 +31,11 @@
             font-size: 12px;
             width: 320px;
             color: #000;
-            display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .popup-container.show {
+        .popup-container.show, .confirmation-popup.show {
             display: flex;
         }
 
@@ -57,7 +56,6 @@
             transform: translate(4px, 4px);
         }
 
-        /* Pixelated Slider */
         .slider-container {
             width: 100%;
             display: flex;
@@ -94,123 +92,72 @@
             box-shadow: 2px 2px 0px #000;
         }
 
-        .pixel-slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: #fff;
-            border: 3px solid #000;
+        .confirmation-popup {
+            background-color: #fff;
+            border: 4px solid #000;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            box-shadow: 4px 4px 0px #000;
+            width: 220px;
+            position: fixed;
+        }
+
+        .confirmation-popup .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 18px;
+            height: 18px;
+            background-color: #fff;
+            border: 2px solid #000;
+            font-size: 10px;
+            font-weight: bold;
             cursor: pointer;
-            box-shadow: 2px 2px 0px #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Media Query for screens between 1496px to 642px */
-        @media (max-width: 1496px) and (min-width: 642px) {
-            /* Popup container */
-            .popup-container {
-                padding: 40px; /* Bigger padding */
-                width: 500px; /* Larger width */
-                font-size: 16px; /* Larger font size */
-            }
-
-            /* Pixel button */
-            .pixel-btn {
-                padding: 20px 40px; /* Larger button */
-                font-size: 18px; /* Larger font */
-            }
-
-            /* Slider label */
-            .slider-label {
-                font-size: 16px; /* Larger label font */
-            }
-
-            /* Pixel slider */
-            .pixel-slider {
-                width: 90%; /* Larger slider width */
-                height: 15px; /* Larger slider height */
-            }
-
-            /* Slider thumb */
-            .pixel-slider::-webkit-slider-thumb {
-                width: 30px; /* Larger thumb */
-                height: 30px; /* Larger thumb */
-            }
-
-            .pixel-slider::-moz-range-thumb {
-                width: 30px; /* Larger thumb */
-                height: 30px; /* Larger thumb */
-            }
+        .green-btn {
+            background-color: #4CAF50;
+            color: white;
         }
 
-        /* Media Query for screens below 542px */
-        @media (max-width: 542px) {
-            /* Popup container */
-            .popup-container {
-                padding: 15px; /* Smaller padding */
-                width: 250px; /* Smaller width */
-                font-size: 12px; /* Smaller font size */
-            }
-
-            /* Pixel button */
-            .pixel-btn {
-                padding: 8px 16px; /* Smaller button */
-                font-size: 12px; /* Smaller font */
-            }
-
-            /* Slider label */
-            .slider-label {
-                font-size: 10px; /* Smaller label font */
-            }
-
-            /* Pixel slider */
-            .pixel-slider {
-                width: 60%; /* Smaller slider width */
-                height: 10px; /* Smaller slider height */
-            }
-
-            /* Slider thumb */
-            .pixel-slider::-webkit-slider-thumb {
-                width: 18px; /* Smaller thumb */
-                height: 18px; /* Smaller thumb */
-            }
-
-            .pixel-slider::-moz-range-thumb {
-                width: 18px; /* Smaller thumb */
-                height: 18px; /* Smaller thumb */
-            }
-        }
     </style>
 </head>
 <body>
 
-    <button class="pixel-btn" onclick="showPopup()">Show Pop-up</button>
-
-    <div class="popup-container" id="popup">
+    <div class="popup-container show" id="popup">
         <p>Set Your Target</p>
-        
-        <!-- Slider aligned at the bottom -->
         <div class="slider-container">
             <label class="slider-label">Target: <span id="targetValue">5000</span></label>
             <input type="range" min="0" max="10000" value="5000" class="pixel-slider" id="targetSlider">
         </div>
+        <button class="pixel-btn" onclick="showConfirmation()">Continue</button>
+    </div>
 
-        <!-- Redirects to bunny.html -->
-        <button class="pixel-btn" onclick="redirectToBunny()">Continue</button>
+    <div class="confirmation-popup" id="confirmationPopup">
+        <button class="close-btn" onclick="closeConfirmation()">✖</button>
+        <p>Let's do <span id="finalValue">5000</span>!</p>
+        <button class="pixel-btn green-btn" onclick="redirectToBunny()">Yeah!</button>
     </div>
 
     <script>
-        function showPopup() {
-            document.getElementById("popup").classList.add("show");
+        function showConfirmation() {
+            const finalValue = document.getElementById("targetSlider").value;
+            document.getElementById("finalValue").textContent = finalValue;
+            document.getElementById("confirmationPopup").classList.add("show");
         }
 
-        function closePopup() {
-            document.getElementById("popup").classList.remove("show");
+        function closeConfirmation() {
+            document.getElementById("confirmationPopup").classList.remove("show");
         }
 
         function redirectToBunny() {
             window.location.href = "bunny.html";
         }
 
-        // Update slider value display
         const slider = document.getElementById("targetSlider");
         const output = document.getElementById("targetValue");
 
