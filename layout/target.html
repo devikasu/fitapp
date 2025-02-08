@@ -24,12 +24,12 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: #ffbdbd;
-            padding: 20px;
-            border: 8px solid #fff;
-            box-shadow: 4px 4px 0px #000;
+            padding: 40px; /* Increased padding */
+            border: 10px solid #fff;
+            box-shadow: 6px 6px 0px #000;
             text-align: center;
-            font-size: 12px;
-            width: 320px;
+            font-size: 16px; /* Bigger text */
+            width: 400px; /* Wider popup */
             color: #000;
             display: flex;
             flex-direction: column;
@@ -42,13 +42,13 @@
 
         .pixel-btn {
             background-color: #fff;
-            box-shadow: 4px 4px 0px #000;
+            box-shadow: 6px 6px 0px #000;
             border: 4px solid #000;
-            padding: 12px 20px;
-            font-size: 14px;
+            padding: 14px 25px; /* Bigger button */
+            font-size: 18px; /* Larger font */
             font-family: 'Press Start 2P', cursive;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 20px;
             text-transform: uppercase;
         }
 
@@ -67,40 +67,40 @@
         }
 
         .slider-label {
-            font-size: 12px;
-            margin-bottom: 5px;
+            font-size: 16px; /* Bigger label */
+            margin-bottom: 10px;
         }
 
         .pixel-slider {
             -webkit-appearance: none;
             appearance: none;
             width: 80%;
-            height: 12px;
+            height: 18px; /* Thicker slider */
             background: #777;
             outline: none;
-            border: 3px solid #333;
+            border: 4px solid #333;
             cursor: pointer;
-            margin-top: 5px;
+            margin-top: 10px;
         }
 
         .pixel-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 30px; /* Bigger thumb */
+            height: 30px;
             background: #fff;
-            border: 3px solid #000;
+            border: 4px solid #000;
             cursor: pointer;
-            box-shadow: 2px 2px 0px #000;
+            box-shadow: 4px 4px 0px #000;
         }
 
         .pixel-slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             background: #fff;
-            border: 3px solid #000;
+            border: 4px solid #000;
             cursor: pointer;
-            box-shadow: 2px 2px 0px #000;
+            box-shadow: 4px 4px 0px #000;
         }
 
     </style>
@@ -112,13 +112,12 @@
     <div class="popup-container" id="popup">
         <p>Set Your Target</p>
         
-        <!-- Slider aligned at the bottom -->
+        <!-- Bigger slider -->
         <div class="slider-container">
             <label class="slider-label">Target: <span id="targetValue">5000</span></label>
             <input type="range" min="0" max="10000" value="5000" class="pixel-slider" id="targetSlider">
         </div>
 
-        <!-- Redirects to bunny.html -->
         <button class="pixel-btn" onclick="redirectToBunny()">Continue</button>
     </div>
 
