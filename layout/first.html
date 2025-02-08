@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixelated Pop-up Box</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        body {
+            background-color: #FFDE9B; /* Background color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        /* Bouncing Animation */
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+            50% { transform: translate(-50%, -50%) translateY(-10px); }
+        }
+
+        .popup-container {
+            display: block; /* Always visible since the button is removed */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffbdbd;
+            padding: 20px;
+            border: 8px solid #fff;
+            box-shadow: 4px 4px 0px #000;
+            text-align: center;
+            font-size: 14px;
+            width: 300px;
+            color: #000;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        .popup-container button {
+            background: none;
+            border: 2px solid #000;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .pixel-btn {
+            background-color: #fff;
+            box-shadow: 2px 2px 0px #000;
+        }
+
+        .pixel-btn:active {
+            box-shadow: none;
+            transform: translate(2px, 2px);
+        }
+
+        /* Style for the PNG image */
+        .popup-container img {
+            width: 100px; /* Adjust size */
+            height: auto;
+            margin: 10px 0;
+            image-rendering: pixelated; /* Keeps pixel-art style */
+        }
+    </style>
+</head>
+<body>
+    <div class="popup-container" id="popup">
+        <p>Welcome to Stepogochi</p>
+        <img src="" alt="Stepogochi Character">  <!-- Add your image path here -->
+        <button class="pixel-btn">Close</button>
+    </div>
+</body>
+</html>

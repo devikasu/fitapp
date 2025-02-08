@@ -1,25 +1,46 @@
 let steps = 0;
-let lastAcceleration = 0;
+let lastY = null;
 
 // Function to start step tracking
 function startTracking() {
-    if ('Accelerometer' in window) {
-        let sensor = new Accelerometer({ frequency: 10 });
-
-        sensor.addEventListener("reading", () => {
-            let acceleration = Math.sqrt(sensor.x ** 2 + sensor.y ** 2 + sensor.z ** 2);
-            
-            // Detect step if acceleration difference crosses a threshold
-            if (Math.abs(acceleration - lastAcceleration) > 2) {
-                steps++;
-                document.getElementById("steps").innerText = `Steps: ${steps}`;
-            }
-
-            lastAcceleration = acceleration;
-        });
-
-        sensor.start();
+    if (window.DeviceMotionEvent) {
+        window.addEventListener("devicemotion", detectSteps);
+        alert("Step tracking started! Shake your phone to simulate steps.");
     } else {
         alert("Your device does not support motion sensors.");
+    }
+}
+
+// Function to detect steps
+function detectSteps(event) {
+    let acceleration = event.accelerationIncludingGravity;
+
+    if (acceleration && acceleration.y) {
+        if (lastY !== null) {
+            let change = Math.abs(acceleration.y - lastY);
+
+            if (change > 2) { // Step detection threshold
+                steps++;
+                updateProgress();
+            }
+        }
+        lastY = acceleration.y;
+    }
+}
+
+// Function to update progress bar
+function updateProgress() {
+    let stepText = document.getElementById("step-count");
+    let progressBar = document.getElementById("progressBar");
+
+    stepText.innerHTML = `Steps: ${steps}`;
+    
+    // Increase progress (max width = 100%)
+    let progress = Math.min((steps / 100) * 100, 100); // Assuming 100 steps = full bar
+    progressBar.style.width = `${progress}%`;
+
+    if (steps >= 100) {
+        alert("🎉 Goal Reached!");
+        window.removeEventListener("devicemotion", detectSteps);
     }
 }

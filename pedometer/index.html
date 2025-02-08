@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Pedometer</title>
+    <title>Step Progress Bar</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Pedometer (Step Counter)</h1>
-    <button onclick="startTracking()">Start Tracking</button>
-    <p id="steps">Steps: 0</p>
+
+    <h1>Step Progress</h1>
+    
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <p id="step-count">Steps: 0</p>
+    <button class="pixel-btn" onclick="startTracking()">Start Tracking</button>
+
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
