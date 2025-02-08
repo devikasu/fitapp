@@ -6,6 +6,7 @@
     <title>Pixelated Sliding Bar with Settings</title>
     <style>
         body {
+<<<<<<< HEAD
             background: #FFDE9B;
             margin: 0;
             display: flex;
@@ -83,10 +84,99 @@
                 #FF69B4 0px, #FF69B4 5px, 
                 #B0B0B0 5px, #B0B0B0 10px
             );
+=======
+            background-color: #FFDE9B; /* Background color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        /* Bouncing Animation for the Box */
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+            50% { transform: translate(-50%, -50%) translateY(-10px); }
+        }
+
+        /* Alternate Movement for Eggs */
+        @keyframes moveUpperEgg {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); } /* Moves up */
+        }
+
+        @keyframes moveLowerEgg {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); } /* Moves down */
+        }
+
+        .popup-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffbdbd;
+            padding: 20px;
+            border: 8px solid #fff;
+            box-shadow: 4px 4px 0px #000;
+            text-align: center;
+            font-size: 14px;
+            width: 300px;
+            color: #000;
+            animation: bounce 1.2s infinite ease-in-out; /* Box Bouncing */
+        }
+
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .image-stack {
+            position: relative;
+            width: 80px; /* Adjusted for smaller images */
+            height: 160px; /* Decreased height to move eggs closer */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-stack img {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .image-stack img:first-child {
+            animation: moveUpperEgg 0.8s infinite alternate ease-in-out;
+            margin-bottom: 5px; /* Less space between eggs */
+        }
+
+        .image-stack img:last-child {
+            animation: moveLowerEgg 0.8s infinite alternate ease-in-out;
+        }
+
+        .pixel-btn {
+            background-color: #fff;
+            border: 2px solid #000;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #000;
+            margin-top: 10px; /* Moves button slightly up */
+        }
+
+        .pixel-btn:active {
+            box-shadow: none;
+            transform: translate(2px, 2px);
+>>>>>>> a9b28924b9bf2c1426fd198d8bbbdf5a342bb64f
         }
     </style>
 </head>
 <body>
+<<<<<<< HEAD
 
     <div class="container">
         <div class="slider-container">
@@ -96,6 +186,16 @@
         <div class="icon-container">
             <div class="icon-box" onclick="window.location.href='settings.html'">⚙️</div> 
             <div class="icon-box doughnut-box">🍩</div>
+=======
+    <div class="popup-container" id="popup">
+        <p>Welcome to Stepogochi</p>
+        <div class="image-container">
+            <div class="image-stack">
+                <img src="../vector2.png" alt="upper egg">
+                <img src="../vector1.png" alt="lower egg">
+            </div>
+            <button class="pixel-btn" onclick="window.location.href='main.html'">Next</button>
+>>>>>>> a9b28924b9bf2c1426fd198d8bbbdf5a342bb64f
         </div>
     </div>
 
