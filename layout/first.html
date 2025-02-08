@@ -17,14 +17,24 @@
             font-family: 'Press Start 2P', cursive;
         }
 
-        /* Bouncing Animation */
+        /* Bouncing Animation for the Box */
         @keyframes bounce {
             0%, 100% { transform: translate(-50%, -50%) translateY(0); }
             50% { transform: translate(-50%, -50%) translateY(-10px); }
         }
 
+        /* Alternate Movement for Eggs */
+        @keyframes moveUpperEgg {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); } /* Moves up */
+        }
+
+        @keyframes moveLowerEgg {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); } /* Moves down */
+        }
+
         .popup-container {
-            display: block; /* Always visible since the button is removed */
             position: fixed;
             top: 50%;
             left: 50%;
@@ -37,42 +47,66 @@
             font-size: 14px;
             width: 300px;
             color: #000;
-            animation: bounce 1.5s infinite ease-in-out;
+            animation: bounce 1.2s infinite ease-in-out; /* Box Bouncing */
         }
 
-        .popup-container button {
-            background: none;
-            border: 2px solid #000;
-            padding: 5px 10px;
-            font-size: 12px;
-            cursor: pointer;
-            margin-top: 10px;
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .image-stack {
+            position: relative;
+            width: 80px; /* Adjusted for smaller images */
+            height: 160px; /* Decreased height to move eggs closer */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-stack img {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .image-stack img:first-child {
+            animation: moveUpperEgg 0.8s infinite alternate ease-in-out;
+            margin-bottom: 5px; /* Less space between eggs */
+        }
+
+        .image-stack img:last-child {
+            animation: moveLowerEgg 0.8s infinite alternate ease-in-out;
         }
 
         .pixel-btn {
             background-color: #fff;
+            border: 2px solid #000;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
             box-shadow: 2px 2px 0px #000;
+            margin-top: 10px; /* Moves button slightly up */
         }
 
         .pixel-btn:active {
             box-shadow: none;
             transform: translate(2px, 2px);
         }
-
-        /* Style for the PNG image */
-        .popup-container img {
-            width: 100px; /* Adjust size */
-            height: auto;
-            margin: 10px 0;
-            image-rendering: pixelated; /* Keeps pixel-art style */
-        }
     </style>
 </head>
 <body>
     <div class="popup-container" id="popup">
         <p>Welcome to Stepogochi</p>
-        <img src="" alt="Stepogochi Character">  <!-- Add your image path here -->
-        <button class="pixel-btn">Close</button>
+        <div class="image-container">
+            <div class="image-stack">
+                <img src="../vector2.png" alt="upper egg">
+                <img src="../vector1.png" alt="lower egg">
+            </div>
+            <button class="pixel-btn" onclick="window.location.href='main.html'">Next</button>
+        </div>
     </div>
 </body>
 </html>
