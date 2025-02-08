@@ -11,30 +11,49 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
             position: relative;
         }
 
-        .container {
+        /* Moves everything except the image to the top */
+        .top-container {
             width: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* Keeps slider and settings icon aligned */
-            margin-top: 20px; /* Space from the top */
+            margin-top: 20px;
+        }
+
+        /* Centered Image */
+        .middle-image {
+            width: 120px; /* Adjust size as needed */
+            height: auto;
+            position: absolute;
+            top: 50%; /* Centering */
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
             padding: 0 10px;
             box-sizing: border-box;
             position: relative;
         }
 
         .slider-container {
-            width: 80%;
-            height: 30px;
+            width: 250px;
+            height: 40px;
             background: #FFF5D1;
             border-radius: 5px;
             border: 3px solid #E0A96D;
             overflow: hidden;
             display: flex;
             align-items: center;
-            margin-left: 5%; /* Shifts the sliding bar slightly to the right */
+            position: relative;
         }
 
         .slider-bar {
@@ -52,8 +71,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative;
-            margin-left: 10px; /* Keeps it aligned with the slider */
+            justify-content: space-between;
+            height: 80px;
+            margin-left: 10px;
         }
 
         .icon-box {
@@ -64,7 +84,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 22px; /* Bigger icon */
+            font-size: 22px;
             font-weight: bold;
             text-align: center;
             color: #333;
@@ -73,7 +93,7 @@
         }
 
         .doughnut-box {
-            margin-top: 10px; /* Space between settings and doughnut */
+            margin-top: 10px;
         }
 
         .icon-box:hover {
@@ -87,16 +107,20 @@
 </head>
 <body>
 
-    <div class="container">
-        <div class="slider-container">
-            <div class="slider-bar" id="slider"></div>
-        </div>
-        
-        <div class="icon-container">
-            <div class="icon-box">⚙️</div> <!-- Settings Icon -->
-            <div class="icon-box doughnut-box">🍩</div> <!-- Doughnut Icon -->
+    <div class="top-container">
+        <div class="container">
+            <div class="slider-container">
+                <div class="slider-bar" id="slider"></div>
+            </div>
+            
+            <div class="icon-container">
+                <div class="icon-box" onclick="window.location.href='settings.html'">⚙</div> 
+                <div class="icon-box doughnut-box" onclick="startEating()">🍩</div>
+            </div>
         </div>
     </div>
+
+    <img src="../eat.png" id="foodImage" alt="Eat Icon" class="middle-image"> <!-- Centered Image -->
 
     <script>
         function updateBar(value) {
@@ -104,12 +128,26 @@
             bar.style.width = value + "%";
         }
 
-        // Simulate data-driven updates
         let progress = 0;
         setInterval(() => {
-            progress = (progress + 10) % 101; // Loop from 0 to 100
+            progress = (progress + 10) % 101;
             updateBar(progress);
         }, 2000);
+
+        function startEating() {
+            const image = document.getElementById("foodImage");
+            const images = ["../nom.png", "../doonut.png", "../eat.png"];
+            let count = 0;
+
+            function cycleImages() {
+                if (count < 9) { // Loop three times (3 images per loop)
+                    image.src = images[count % 3]; // Cycle through the array
+                    count++;
+                    setTimeout(cycleImages, 500); // Change every 0.5 seconds
+                }
+            }
+            cycleImages();
+        }
     </script>
 
 </body>
