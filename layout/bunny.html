@@ -17,24 +17,24 @@
         .container {
             width: 100%;
             display: flex;
-            align-items: center;
-            justify-content: flex-start; /* Keeps slider and settings icon aligned */
-            margin-top: 20px; /* Space from the top */
+            align-items: flex-start;
+            justify-content: center;
+            margin-top: 20px;
             padding: 0 10px;
             box-sizing: border-box;
             position: relative;
         }
 
         .slider-container {
-            width: 80%;
-            height: 30px;
+            width: 250px;
+            height: 40px;
             background: #FFF5D1;
             border-radius: 5px;
             border: 3px solid #E0A96D;
             overflow: hidden;
             display: flex;
             align-items: center;
-            margin-left: 5%; /* Shifts the sliding bar slightly to the right */
+            position: relative;
         }
 
         .slider-bar {
@@ -52,8 +52,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative;
-            margin-left: 10px; /* Keeps it aligned with the slider */
+            justify-content: space-between;
+            height: 80px;
+            margin-left: 10px;
         }
 
         .icon-box {
@@ -64,7 +65,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 22px; /* Bigger icon */
+            font-size: 22px;
             font-weight: bold;
             text-align: center;
             color: #333;
@@ -73,7 +74,7 @@
         }
 
         .doughnut-box {
-            margin-top: 10px; /* Space between settings and doughnut */
+            margin-top: 10px;
         }
 
         .icon-box:hover {
@@ -93,8 +94,8 @@
         </div>
         
         <div class="icon-container">
-            <div class="icon-box">⚙️</div> <!-- Settings Icon -->
-            <div class="icon-box doughnut-box">🍩</div> <!-- Doughnut Icon -->
+            <div class="icon-box" onclick="window.location.href='settings.html'">⚙️</div> 
+            <div class="icon-box doughnut-box">🍩</div>
         </div>
     </div>
 
@@ -104,10 +105,9 @@
             bar.style.width = value + "%";
         }
 
-        // Simulate data-driven updates
         let progress = 0;
         setInterval(() => {
-            progress = (progress + 10) % 101; // Loop from 0 to 100
+            progress = (progress + 10) % 101;
             updateBar(progress);
         }, 2000);
     </script>

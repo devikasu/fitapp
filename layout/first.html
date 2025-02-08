@@ -3,114 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixelated Pop-up Box</title>
+    <title>Pixelated Sliding Bar with Settings</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
         body {
-            background-color: #FFDE9B;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background: #FFDE9B;
             margin: 0;
-            font-family: 'Press Start 2P', cursive;
-        }
-
-        /* Bouncing Animation for the Box */
-        @keyframes bounce {
-            0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-            50% { transform: translate(-50%, -50%) translateY(-10px); }
-        }
-
-        /* Egg Movement Animations */
-        @keyframes moveUpperEgg {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        @keyframes moveLowerEgg {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(8px); }
-        }
-
-        .popup-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ffbdbd;
-            padding: 20px;
-            border: 8px solid #000;
-            box-shadow: 8px 8px 0px #000;
-            text-align: center;
-            font-size: 14px;
-            width: 320px;
-            color: #000;
-            animation: bounce 1.2s infinite ease-in-out;
-        }
-
-        .image-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        .image-stack {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 90px;
-            height: 160px;
-        }
-
-        .image-stack img {
-            width: 100%;
-            height: auto;
             position: relative;
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 0 10px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .slider-container {
+            width: 250px;
+            height: 40px;
+            background: #FFF5D1;
+            border-radius: 5px;
+            border: 3px solid #E0A96D;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .slider-bar {
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg, 
+                #FF69B4 0px, #FF69B4 10px, 
+                #B0B0B0 10px, #B0B0B0 20px
+            );
+            transition: width 0.5s ease-in-out;
             image-rendering: pixelated;
         }
 
-        .image-stack img:first-child {
-            animation: moveUpperEgg 0.8s infinite alternate ease-in-out;
-            margin-bottom: 5px;
+        .icon-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+            margin-left: 10px;
         }
 
-        .image-stack img:last-child {
-            animation: moveLowerEgg 0.8s infinite alternate ease-in-out;
-        }
-
-        /* Pixelated Button */
-        .pixel-btn {
-            background-color: #fff;
-            border: 4px solid #000;
-            padding: 12px 20px;
-            font-size: 14px;
-            cursor: pointer;
-            box-shadow: 4px 4px 0px #000;
-            margin-top: 15px;
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            background: #FFF5D1;
+            border: 3px solid #E0A96D;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            font-weight: bold;
             text-align: center;
-            font-family: 'Press Start 2P', cursive;
-            display: inline-block;
-            text-transform: uppercase;
+            color: #333;
+            cursor: pointer;
+            image-rendering: pixelated;
         }
 
-        .pixel-btn:active {
-            box-shadow: none;
-            transform: translate(4px, 4px);
+        .doughnut-box {
+            margin-top: 10px;
+        }
+
+        .icon-box:hover {
+            background: repeating-linear-gradient(
+                45deg, 
+                #FF69B4 0px, #FF69B4 5px, 
+                #B0B0B0 5px, #B0B0B0 10px
+            );
         }
     </style>
 </head>
 <body>
-    <div class="popup-container" id="popup">
-        <p>Welcome to Stepogochi</p>
-        <div class="image-container">
-            <div class="image-stack">
-                <img src="vector2.png" alt="upper egg">
-                <img src="vector1.png" alt="lower egg">
-            </div>
-            <button class="pixel-btn" onclick="window.location.href='main.html'">Next</button>
+
+    <div class="container">
+        <div class="slider-container">
+            <div class="slider-bar" id="slider"></div>
+        </div>
+        
+        <div class="icon-container">
+            <div class="icon-box" onclick="window.location.href='settings.html'">⚙️</div> 
+            <div class="icon-box doughnut-box">🍩</div>
         </div>
     </div>
+
+    <script>
+        function updateBar(value) {
+            const bar = document.getElementById("slider");
+            bar.style.width = value + "%";
+        }
+
+        let progress = 0;
+        setInterval(() => {
+            progress = (progress + 10) % 101;
+            updateBar(progress);
+        }, 2000);
+    </script>
+
 </body>
 </html>
