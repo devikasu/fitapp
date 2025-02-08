@@ -1,4 +1,4 @@
-const CLIENT_ID = "515345527131-r1pmgec89gr6uuv4sadk2vtunklqtum7.apps.googleusercontent.com";
+const CLIENT_ID = "988973801708-plttm3ocdj3bd5ht81cajkkouhd1q66b.apps.googleusercontent.com";
 const SCOPES = "https://www.googleapis.com/auth/fitness.activity.read";
 let accessToken = null;
 
