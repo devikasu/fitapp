@@ -31,6 +31,16 @@
             align-items: center;
             position: relative;
             line-height: 1.6;
+            animation: bounce 1s infinite ease-in-out; /* Bounce effect */
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
         }
 
         .popup-image {
@@ -59,77 +69,67 @@
 
         /* Media Query for screens between 1496px to 642px */
         @media (max-width: 1496px) and (min-width: 642px) {
-            /* Popup container */
             .popup-container {
-                padding: 40px; /* Bigger padding */
-                width: 500px; /* Larger width */
-                font-size: 16px; /* Larger font size */
+                padding: 40px;
+                width: 500px;
+                font-size: 16px;
             }
 
-            /* Pixel button */
             .pixel-btn {
-                padding: 20px 40px; /* Larger button */
-                font-size: 18px; /* Larger font */
+                padding: 20px 40px;
+                font-size: 18px;
             }
 
-            /* Slider label */
             .slider-label {
-                font-size: 16px; /* Larger label font */
+                font-size: 16px;
             }
 
-            /* Pixel slider */
             .pixel-slider {
-                width: 90%; /* Larger slider width */
-                height: 15px; /* Larger slider height */
+                width: 90%;
+                height: 15px;
             }
 
-            /* Slider thumb */
             .pixel-slider::-webkit-slider-thumb {
-                width: 30px; /* Larger thumb */
-                height: 30px; /* Larger thumb */
+                width: 30px;
+                height: 30px;
             }
 
             .pixel-slider::-moz-range-thumb {
-                width: 30px; /* Larger thumb */
-                height: 30px; /* Larger thumb */
+                width: 30px;
+                height: 30px;
             }
         }
 
         /* Media Query for screens below 542px */
         @media (max-width: 542px) {
-            /* Popup container */
             .popup-container {
-                padding: 15px; /* Smaller padding */
-                width: 250px; /* Smaller width */
-                font-size: 12px; /* Smaller font size */
+                padding: 15px;
+                width: 250px;
+                font-size: 12px;
             }
 
-            /* Pixel button */
             .pixel-btn {
-                padding: 8px 16px; /* Smaller button */
-                font-size: 12px; /* Smaller font */
+                padding: 8px 16px;
+                font-size: 12px;
             }
 
-            /* Slider label */
             .slider-label {
-                font-size: 10px; /* Smaller label font */
+                font-size: 10px;
             }
 
-            /* Pixel slider */
             .pixel-slider {
-                width: 60%; /* Smaller slider width */
-                height: 10px; /* Smaller slider height */
+                width: 60%;
+                height: 10px;
             }
 
-            /* Slider thumb */
             .pixel-slider::-webkit-slider-thumb {
-                width: 18px; /* Smaller thumb */
-                height: 18px; /* Smaller thumb */
+                width: 18px;
+                height: 18px;
             }
 
             .pixel-slider::-moz-range-thumb {
-                width: 18px; /* Smaller thumb */
-                height: 18px; /* Smaller thumb */
+                width: 18px;
+                height: 18px;
             }
         }
     </style>
@@ -139,7 +139,6 @@
     <div class="popup-container">
         <p>Hi, I'm Gochi and I like doughnuts..<br>Would you help me get some??</p>
 
-        <!-- Image that switches between idle.png and open.png -->
         <img id="gochi-image" class="popup-image" src="../idle.png" alt="Idle Gochi">
 
         <button class="pixel-btn" onclick="openTargetPage()">Sure</button>
