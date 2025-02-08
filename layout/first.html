@@ -8,7 +8,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
         body {
-            background-color: #FFDE9B; /* Background color */
+            background-color: #FFDE9B;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,21 +17,21 @@
             font-family: 'Press Start 2P', cursive;
         }
 
-        /* Bouncing Animation for the Box */
+        /* Bouncing Animation */
         @keyframes bounce {
             0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-            50% { transform: translate(-50%, -50%) translateY(-15px); }
+            50% { transform: translate(-50%, -50%) translateY(-8px); }
         }
 
-        /* Alternate Movement for Eggs */
+        /* Egg Movements */
         @keyframes moveUpperEgg {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); } /* Moves up */
+            50% { transform: translateY(-8px); }
         }
 
         @keyframes moveLowerEgg {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(15px); } /* Moves down */
+            50% { transform: translateY(8px); }
         }
 
         .popup-container {
@@ -40,14 +40,14 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: #ffbdbd;
-            padding: 40px;
-            border: 10px solid #fff;
-            box-shadow: 6px 6px 0px #000;
+            padding: 15px; /* Smaller padding */
+            border: 4px solid #fff;
+            box-shadow: 2px 2px 0px #000;
             text-align: center;
-            font-size: 22px; /* Bigger text */
-            width: 400px; /* Increased width */
+            font-size: 10px; /* Smaller text */
+            width: 220px; /* Smaller width */
             color: #000;
-            animation: bounce 1.2s infinite ease-in-out; /* Box Bouncing */
+            animation: bounce 1.2s infinite ease-in-out;
         }
 
         .image-container {
@@ -58,8 +58,8 @@
 
         .image-stack {
             position: relative;
-            width: 120px; /* Increased size */
-            height: 240px; /* Adjusted height */
+            width: 60px; /* Smaller width */
+            height: 120px; /* Smaller height */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -74,42 +74,41 @@
 
         .image-stack img:first-child {
             animation: moveUpperEgg 0.8s infinite alternate ease-in-out;
-            margin-bottom: 10px; /* More spacing */
+            margin-bottom: 3px;
         }
 
         .image-stack img:last-child {
             animation: moveLowerEgg 0.8s infinite alternate ease-in-out;
         }
 
-        /* Updated HATCH Button */
+        /* Smaller HATCH Button */
         .pixel-btn {
-            background-color: #4CAF50; /* Green color */
-            border: 3px solid #000;
-            padding: 12px 20px;
-            font-size: 18px;
+            background-color: #4CAF50;
+            border: 2px solid #000;
+            padding: 6px 12px; /* Smaller button */
+            font-size: 10px; /* Smaller font */
             cursor: pointer;
-            box-shadow: 3px 3px 0px #000;
-            margin-top: 15px; /* Moves button slightly up */
+            box-shadow: 2px 2px 0px #000;
+            margin-top: 8px;
             font-family: 'Press Start 2P', cursive;
-            color: white; /* White text for contrast */
+            color: white;
             text-transform: uppercase;
         }
 
         .pixel-btn:active {
             box-shadow: none;
-            transform: translate(3px, 3px);
+            transform: translate(2px, 2px);
         }
     </style>
 </head>
 <body>
     <div class="popup-container" id="popup">
-        <p>Welcome to <br> <br> </b>Stepogochi</p>
+        <p>Welcome to <br> <br> <b>Stepogochi</b></p>
         <div class="image-container">
             <div class="image-stack">
                 <img src="../vector2.png" alt="upper egg">
                 <img src="../vector1.png" alt="lower egg">
             </div>
-            <!-- Updated button text to HATCH -->
             <button class="pixel-btn" onclick="window.location.href='main.html'">HATCH</button>
         </div>
     </div>
