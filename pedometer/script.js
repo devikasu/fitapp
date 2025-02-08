@@ -1,25 +1,30 @@
 let steps = 0;
-let lastAcceleration = 0;
+let lastY = null;
 
-// Function to start step tracking
+// Function to start tracking
 function startTracking() {
-    if ('Accelerometer' in window) {
-        let sensor = new Accelerometer({ frequency: 10 });
-
-        sensor.addEventListener("reading", () => {
-            let acceleration = Math.sqrt(sensor.x ** 2 + sensor.y ** 2 + sensor.z ** 2);
-            
-            // Detect step if acceleration difference crosses a threshold
-            if (Math.abs(acceleration - lastAcceleration) > 2) {
-                steps++;
-                document.getElementById("steps").innerText = `Steps: ${steps}`;
-            }
-
-            lastAcceleration = acceleration;
-        });
-
-        sensor.start();
+    if (window.DeviceMotionEvent) {
+        window.addEventListener("devicemotion", detectSteps);
+        alert("Step tracking started! Walk normally to see the count.");
     } else {
         alert("Your device does not support motion sensors.");
     }
 }
+
+// Function to detect steps using acceleration
+function detectSteps(event) {
+    let acceleration = event.accelerationIncludingGravity;
+
+    if (acceleration && acceleration.y) {
+        if (lastY !== null) {
+            let change = Math.abs(acceleration.y - lastY);
+
+            if (change > 2) { // Threshold for detecting a step
+                steps++;
+                document.getElementById("steps").innerText = `Steps: ${steps}`;
+            }
+        }
+        lastY = acceleration.y;
+    }
+}
+
