@@ -6,7 +6,94 @@
     <title>Pixelated Sliding Bar with Settings</title>
     <style>
         body {
+<<<<<<< HEAD
             background: #FFDE9B;
+=======
+<<<<<<< HEAD
+            background: #FFDE9B;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 0 10px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .slider-container {
+            width: 250px;
+            height: 40px;
+            background: #FFF5D1;
+            border-radius: 5px;
+            border: 3px solid #E0A96D;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .slider-bar {
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg, 
+                #FF69B4 0px, #FF69B4 10px, 
+                #B0B0B0 10px, #B0B0B0 20px
+            );
+            transition: width 0.5s ease-in-out;
+            image-rendering: pixelated;
+        }
+
+        .icon-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+            margin-left: 10px;
+        }
+
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            background: #FFF5D1;
+            border: 3px solid #E0A96D;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+            cursor: pointer;
+            image-rendering: pixelated;
+        }
+
+        .doughnut-box {
+            margin-top: 10px;
+        }
+
+        .icon-box:hover {
+            background: repeating-linear-gradient(
+                45deg, 
+                #FF69B4 0px, #FF69B4 5px, 
+                #B0B0B0 5px, #B0B0B0 10px
+            );
+=======
+            background-color: #FFDE9B; /* Background color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+>>>>>>> 71a1a6c83e591562503cc1c1a2e13555a49d86e0
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -92,6 +179,7 @@
             image-rendering: pixelated;
         }
 
+<<<<<<< HEAD
         .doughnut-box {
             margin-top: 10px;
         }
@@ -102,10 +190,17 @@
                 #FF69B4 0px, #FF69B4 5px, 
                 #B0B0B0 5px, #B0B0B0 10px
             );
+=======
+        .pixel-btn:active {
+            box-shadow: none;
+            transform: translate(2px, 2px);
+>>>>>>> a9b28924b9bf2c1426fd198d8bbbdf5a342bb64f
+>>>>>>> 71a1a6c83e591562503cc1c1a2e13555a49d86e0
         }
     </style>
 </head>
 <body>
+<<<<<<< HEAD
 
     <div class="top-container">
         <div class="container">
@@ -122,6 +217,36 @@
 
     <img src="../eat.png" id="foodImage" alt="Eat Icon" class="middle-image"> <!-- Centered Image -->
 
+=======
+<<<<<<< HEAD
+
+    <div class="container">
+        <div class="slider-container">
+            <div class="slider-bar" id="slider"></div>
+        </div>
+        
+        <div class="icon-container">
+            <div class="icon-box" onclick="window.location.href='settings.html'">⚙️</div> 
+            <div class="icon-box doughnut-box">🍩</div>
+=======
+    <div class="popup-container" id="popup">
+        <p>Welcome to Stepogochi</p>
+        <div class="image-container">
+            <div class="image-stack">
+                <img src="../vector2.png" alt="upper egg">
+                <img src="../vector1.png" alt="lower egg">
+            </div>
+<<<<<<< HEAD
+            <button class="pixel-btn" onclick="window.location.href='main.html'">Next</button>
+>>>>>>> a9b28924b9bf2c1426fd198d8bbbdf5a342bb64f
+=======
+            <!-- Updated button text to HATCH -->
+            <button class="pixel-btn" onclick="window.location.href='main.html'">HATCH</button>
+>>>>>>> 247a6073fe2c9b2cdc0f64d660bfb7e29fe02d97
+        </div>
+    </div>
+
+>>>>>>> 71a1a6c83e591562503cc1c1a2e13555a49d86e0
     <script>
         function updateBar(value) {
             const bar = document.getElementById("slider");
@@ -133,6 +258,7 @@
             progress = (progress + 10) % 101;
             updateBar(progress);
         }, 2000);
+<<<<<<< HEAD
 
         function startEating() {
             const image = document.getElementById("foodImage");
@@ -148,6 +274,8 @@
             }
             cycleImages();
         }
+=======
+>>>>>>> 71a1a6c83e591562503cc1c1a2e13555a49d86e0
     </script>
 
 </body>
