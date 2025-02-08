@@ -11,15 +11,34 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
             position: relative;
         }
 
-        .container {
+        /* Moves everything except the image to the top */
+        .top-container {
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* Centered Image */
+        .middle-image {
+            width: 120px; /* Adjust size as needed */
+            height: auto;
+            position: absolute;
+            top: 50%; /* Centering */
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .container {
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            margin-top: 20px;
             padding: 0 10px;
             box-sizing: border-box;
             position: relative;
@@ -46,16 +65,6 @@
             );
             transition: width 0.5s ease-in-out;
             image-rendering: pixelated;
-        }
-
-        /* Centered Image */
-        .middle-image {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 50px;
-            z-index: 2;
-            pointer-events: none;
         }
 
         .icon-container {
@@ -98,21 +107,20 @@
 </head>
 <body>
 
-    <div class="container">
-        <div class="slider-container">
-            <div class="slider-bar" id="slider"></div>
-            <img src="../eat.png" alt="Eat Icon" class="middle-image">
-        </div>
-        
-        <div class="icon-container">
-<<<<<<< HEAD
-            <div class="icon-box" onclick="window.location.href='settings.html'">⚙️</div> 
-=======
-            <div class="icon-box" onclick="window.location.href='settings.html'">⚙</div> 
->>>>>>> 247a6073fe2c9b2cdc0f64d660bfb7e29fe02d97
-            <div class="icon-box doughnut-box">🍩</div>
+    <div class="top-container">
+        <div class="container">
+            <div class="slider-container">
+                <div class="slider-bar" id="slider"></div>
+            </div>
+            
+            <div class="icon-container">
+                <div class="icon-box" onclick="window.location.href='settings.html'">⚙</div> 
+                <div class="icon-box doughnut-box" onclick="startEating()">🍩</div>
+            </div>
         </div>
     </div>
+
+    <img src="../eat.png" id="foodImage" alt="Eat Icon" class="middle-image"> <!-- Centered Image -->
 
     <script>
         function updateBar(value) {
@@ -125,6 +133,21 @@
             progress = (progress + 10) % 101;
             updateBar(progress);
         }, 2000);
+
+        function startEating() {
+            const image = document.getElementById("foodImage");
+            const images = ["../nom.png", "../doonut.png", "../eat.png"];
+            let count = 0;
+
+            function cycleImages() {
+                if (count < 9) { // Loop three times (3 images per loop)
+                    image.src = images[count % 3]; // Cycle through the array
+                    count++;
+                    setTimeout(cycleImages, 500); // Change every 0.5 seconds
+                }
+            }
+            cycleImages();
+        }
     </script>
 
 </body>

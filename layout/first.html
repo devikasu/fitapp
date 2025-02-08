@@ -3,232 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixelated Sliding Bar with Settings</title>
+    <title>Pixelated Pop-up Box</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
         body {
-<<<<<<< HEAD
-            background: #FFDE9B;
-=======
-<<<<<<< HEAD
-            background: #FFDE9B;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-
-        .container {
-            width: 100%;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            margin-top: 20px;
-            padding: 0 10px;
-            box-sizing: border-box;
-            position: relative;
-        }
-
-        .slider-container {
-            width: 250px;
-            height: 40px;
-            background: #FFF5D1;
-            border-radius: 5px;
-            border: 3px solid #E0A96D;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        .slider-bar {
-            height: 100%;
-            background: repeating-linear-gradient(
-                45deg, 
-                #FF69B4 0px, #FF69B4 10px, 
-                #B0B0B0 10px, #B0B0B0 20px
-            );
-            transition: width 0.5s ease-in-out;
-            image-rendering: pixelated;
-        }
-
-        .icon-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            height: 80px;
-            margin-left: 10px;
-        }
-
-        .icon-box {
-            width: 40px;
-            height: 40px;
-            background: #FFF5D1;
-            border: 3px solid #E0A96D;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 22px;
-            font-weight: bold;
-            text-align: center;
-            color: #333;
-            cursor: pointer;
-            image-rendering: pixelated;
-        }
-
-        .doughnut-box {
-            margin-top: 10px;
-        }
-
-        .icon-box:hover {
-            background: repeating-linear-gradient(
-                45deg, 
-                #FF69B4 0px, #FF69B4 5px, 
-                #B0B0B0 5px, #B0B0B0 10px
-            );
-=======
             background-color: #FFDE9B; /* Background color */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
->>>>>>> 71a1a6c83e591562503cc1c1a2e13555a49d86e0
             margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
-            position: relative;
+            font-family: 'Press Start 2P', cursive;
         }
 
-        /* Moves everything except the image to the top */
-        .top-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
+        /* Bouncing Animation for the Box */
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+            50% { transform: translate(-50%, -50%) translateY(-10px); }
         }
 
-        /* Centered Image */
-        .middle-image {
-            width: 120px; /* Adjust size as needed */
-            height: auto;
-            position: absolute;
-            top: 50%; /* Centering */
+        /* Alternate Movement for Eggs */
+        @keyframes moveUpperEgg {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); } /* Moves up */
+        }
+
+        @keyframes moveLowerEgg {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); } /* Moves down */
+        }
+
+        .popup-container {
+            position: fixed;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            background-color: #ffbdbd;
+            padding: 20px;
+            border: 8px solid #fff;
+            box-shadow: 4px 4px 0px #000;
+            text-align: center;
+            font-size: 14px;
+            width: 300px;
+            color: #000;
+            animation: bounce 1.2s infinite ease-in-out; /* Box Bouncing */
         }
 
-        .container {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 0 10px;
-            box-sizing: border-box;
-            position: relative;
-        }
-
-        .slider-container {
-            width: 250px;
-            height: 40px;
-            background: #FFF5D1;
-            border-radius: 5px;
-            border: 3px solid #E0A96D;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        .slider-bar {
-            height: 100%;
-            background: repeating-linear-gradient(
-                45deg, 
-                #FF69B4 0px, #FF69B4 10px, 
-                #B0B0B0 10px, #B0B0B0 20px
-            );
-            transition: width 0.5s ease-in-out;
-            image-rendering: pixelated;
-        }
-
-        .icon-container {
+        .image-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            height: 80px;
-            margin-left: 10px;
         }
 
-        .icon-box {
-            width: 40px;
-            height: 40px;
-            background: #FFF5D1;
-            border: 3px solid #E0A96D;
+        .image-stack {
+            position: relative;
+            width: 80px; /* Adjusted for smaller images */
+            height: 160px; /* Decreased height to move eggs closer */
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            font-size: 22px;
-            font-weight: bold;
-            text-align: center;
-            color: #333;
+            justify-content: center;
+        }
+
+        .image-stack img {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .image-stack img:first-child {
+            animation: moveUpperEgg 0.8s infinite alternate ease-in-out;
+            margin-bottom: 5px; /* Less space between eggs */
+        }
+
+        .image-stack img:last-child {
+            animation: moveLowerEgg 0.8s infinite alternate ease-in-out;
+        }
+
+        /* Updated HATCH Button */
+        .pixel-btn {
+            background-color: #4CAF50; /* Green color */
+            border: 2px solid #000;
+            padding: 5px 10px;
+            font-size: 12px;
             cursor: pointer;
-            image-rendering: pixelated;
+            box-shadow: 2px 2px 0px #000;
+            margin-top: 10px; /* Moves button slightly up */
+            font-family: 'Press Start 2P', cursive;
+            color: white; /* White text for contrast */
+            text-transform: uppercase;
         }
 
-<<<<<<< HEAD
-        .doughnut-box {
-            margin-top: 10px;
-        }
-
-        .icon-box:hover {
-            background: repeating-linear-gradient(
-                45deg, 
-                #FF69B4 0px, #FF69B4 5px, 
-                #B0B0B0 5px, #B0B0B0 10px
-            );
-=======
         .pixel-btn:active {
             box-shadow: none;
             transform: translate(2px, 2px);
->>>>>>> a9b28924b9bf2c1426fd198d8bbbdf5a342bb64f
->>>>>>> 71a1a6c83e591562503cc1c1a2e13555a49d86e0
         }
     </style>
 </head>
 <body>
-<<<<<<< HEAD
-
-    <div class="top-container">
-        <div class="container">
-            <div class="slider-container">
-                <div class="slider-bar" id="slider"></div>
-            </div>
-            
-            <div class="icon-container">
-                <div class="icon-box" onclick="window.location.href='settings.html'">⚙</div> 
-                <div class="icon-box doughnut-box" onclick="startEating()">🍩</div>
-            </div>
-        </div>
-    </div>
-
-    <img src="../eat.png" id="foodImage" alt="Eat Icon" class="middle-image"> <!-- Centered Image -->
-
-=======
-<<<<<<< HEAD
-
-    <div class="container">
-        <div class="slider-container">
-            <div class="slider-bar" id="slider"></div>
-        </div>
-        
-        <div class="icon-container">
-            <div class="icon-box" onclick="window.location.href='settings.html'">⚙️</div> 
-            <div class="icon-box doughnut-box">🍩</div>
-=======
     <div class="popup-container" id="popup">
         <p>Welcome to Stepogochi</p>
         <div class="image-container">
@@ -236,47 +109,9 @@
                 <img src="../vector2.png" alt="upper egg">
                 <img src="../vector1.png" alt="lower egg">
             </div>
-<<<<<<< HEAD
-            <button class="pixel-btn" onclick="window.location.href='main.html'">Next</button>
->>>>>>> a9b28924b9bf2c1426fd198d8bbbdf5a342bb64f
-=======
             <!-- Updated button text to HATCH -->
             <button class="pixel-btn" onclick="window.location.href='main.html'">HATCH</button>
->>>>>>> 247a6073fe2c9b2cdc0f64d660bfb7e29fe02d97
         </div>
     </div>
-
->>>>>>> 71a1a6c83e591562503cc1c1a2e13555a49d86e0
-    <script>
-        function updateBar(value) {
-            const bar = document.getElementById("slider");
-            bar.style.width = value + "%";
-        }
-
-        let progress = 0;
-        setInterval(() => {
-            progress = (progress + 10) % 101;
-            updateBar(progress);
-        }, 2000);
-<<<<<<< HEAD
-
-        function startEating() {
-            const image = document.getElementById("foodImage");
-            const images = ["../nom.png", "../doonut.png", "../eat.png"];
-            let count = 0;
-
-            function cycleImages() {
-                if (count < 9) { // Loop three times (3 images per loop)
-                    image.src = images[count % 3]; // Cycle through the array
-                    count++;
-                    setTimeout(cycleImages, 500); // Change every 0.5 seconds
-                }
-            }
-            cycleImages();
-        }
-=======
->>>>>>> 71a1a6c83e591562503cc1c1a2e13555a49d86e0
-    </script>
-
 </body>
 </html>
