@@ -26,35 +26,35 @@
 
         .popup-container {
             background-color: #ffbdbd;
-            padding: 30px;
-            border: 8px solid #fff;
-            box-shadow: 4px 4px 0px #000;
+            padding: 40px; /* Increased padding */
+            border: 10px solid #fff; /* Slightly thicker border */
+            box-shadow: 6px 6px 0px #000; /* More noticeable shadow */
             text-align: center;
-            font-size: 14px;
-            width: 400px;
+            font-size: 16px; /* Larger text */
+            width: 450px; /* Wider popup */
             color: #000;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            line-height: 1.6;
+            line-height: 1.8; /* More spacing */
             animation: bounce 1.5s infinite ease-in-out; /* Bouncing effect */
         }
 
         .popup-image {
-            width: 120px; /* Adjust size as needed */
-            margin: 10px 0; /* Space between text and button */
+            width: 150px; /* Bigger image */
+            margin: 15px 0; /* More spacing */
         }
 
         .pixel-btn {
             background-color: #4CAF50;
-            box-shadow: 4px 4px 0px #000;
-            border: 2px solid #000;
-            padding: 10px 25px;
-            font-size: 14px;
+            box-shadow: 6px 6px 0px #000; /* More defined shadow */
+            border: 3px solid #000;
+            padding: 12px 30px; /* Bigger button */
+            font-size: 16px; /* Larger font */
             cursor: pointer;
             position: relative;
-            margin-top: 20px;
+            margin-top: 25px; /* More spacing */
             font-family: 'Press Start 2P', cursive;
             color: white;
             text-transform: uppercase;
@@ -62,7 +62,7 @@
 
         .pixel-btn:active {
             box-shadow: none;
-            transform: translate(4px, 4px);
+            transform: translate(6px, 6px);
         }
     </style>
     <script>
@@ -84,7 +84,7 @@
     <div class="popup-container">
         <p>Hi, I'm Gochi and I like doughnuts..<br>Would you help me get some??</p>
 
-        <!-- Image that switches between idle.png and open.png -->
+        <!-- Bigger image -->
         <img id="gochi-image" class="popup-image" src="../idle.png" alt="Idle Gochi">
 
         <button class="pixel-btn" onclick="openTargetPage()">Sure</button>
