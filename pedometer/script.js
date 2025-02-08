@@ -1,18 +1,17 @@
 let steps = 0;
-let stepGoal = 100;  // Change this for a different goal
 let lastY = null;
 
-// Function to start tracking
+// Function to start step tracking
 function startTracking() {
     if (window.DeviceMotionEvent) {
         window.addEventListener("devicemotion", detectSteps);
-        alert("Step tracking started! Walk normally.");
+        alert("Step tracking started! Shake your phone to simulate steps.");
     } else {
         alert("Your device does not support motion sensors.");
     }
 }
 
-// Function to detect steps using acceleration
+// Function to detect steps
 function detectSteps(event) {
     let acceleration = event.accelerationIncludingGravity;
 
@@ -22,29 +21,26 @@ function detectSteps(event) {
 
             if (change > 2) { // Step detection threshold
                 steps++;
-                updateUI();
+                updateProgress();
             }
         }
         lastY = acceleration.y;
     }
 }
 
-// Function to update progress bar and step count
-function updateUI() {
+// Function to update progress bar
+function updateProgress() {
     let stepText = document.getElementById("step-count");
-    let donut = document.getElementById("donut");
+    let progressBar = document.getElementById("progressBar");
 
-    stepText.innerText = `Steps: ${steps} / ${stepGoal}`;
+    stepText.innerHTML = `Steps: ${steps}`;
+    
+    // Increase progress (max width = 100%)
+    let progress = Math.min((steps / 100) * 100, 100); // Assuming 100 steps = full bar
+    progressBar.style.width = `${progress}%`;
 
-    // Move donut (max left = 100%)
-    let progress = Math.min((steps / stepGoal) * 100, 100);
-    donut.style.left = `${progress}%`;
-
-    // Notify when step goal is reached
-    if (steps >= stepGoal) {
-        alert("🎉 Goal Reached! Well done!");
+    if (steps >= 100) {
+        alert("🎉 Goal Reached!");
         window.removeEventListener("devicemotion", detectSteps);
     }
 }
-
-
