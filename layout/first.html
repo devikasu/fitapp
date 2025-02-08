@@ -81,14 +81,18 @@
             animation: moveLowerEgg 0.8s infinite alternate ease-in-out;
         }
 
+        /* Updated HATCH Button */
         .pixel-btn {
-            background-color: #fff;
+            background-color: #4CAF50; /* Green color */
             border: 2px solid #000;
             padding: 5px 10px;
             font-size: 12px;
             cursor: pointer;
             box-shadow: 2px 2px 0px #000;
             margin-top: 10px; /* Moves button slightly up */
+            font-family: 'Press Start 2P', cursive;
+            color: white; /* White text for contrast */
+            text-transform: uppercase;
         }
 
         .pixel-btn:active {
@@ -105,7 +109,8 @@
                 <img src="../vector2.png" alt="upper egg">
                 <img src="../vector1.png" alt="lower egg">
             </div>
-            <button class="pixel-btn" onclick="window.location.href='main.html'">Next</button>
+            <!-- Updated button text to HATCH -->
+            <button class="pixel-btn" onclick="window.location.href='main.html'">HATCH</button>
         </div>
     </div>
 </body>
