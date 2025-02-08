@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gochi's Doughnut Quest</title>
+    <title>Main Page</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
@@ -15,46 +15,38 @@
             height: 100vh;
             margin: 0;
             font-family: 'Press Start 2P', cursive;
-            position: relative;
-        }
-
-        /* Bouncing Animation */
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
         }
 
         .popup-container {
             background-color: #ffbdbd;
-            padding: 40px; /* Increased padding */
-            border: 10px solid #fff; /* Slightly thicker border */
-            box-shadow: 6px 6px 0px #000; /* More noticeable shadow */
+            padding: 30px;
+            border: 8px solid #fff;
+            box-shadow: 4px 4px 0px #000;
             text-align: center;
-            font-size: 16px; /* Larger text */
-            width: 450px; /* Wider popup */
+            font-size: 14px;
+            width: 400px;
             color: #000;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            line-height: 1.8; /* More spacing */
-            animation: bounce 1.5s infinite ease-in-out; /* Bouncing effect */
+            line-height: 1.6;
         }
 
         .popup-image {
-            width: 150px; /* Bigger image */
-            margin: 15px 0; /* More spacing */
+            width: 120px;
+            margin: 10px 0;
         }
 
         .pixel-btn {
             background-color: #4CAF50;
-            box-shadow: 6px 6px 0px #000; /* More defined shadow */
-            border: 3px solid #000;
-            padding: 12px 30px; /* Bigger button */
-            font-size: 16px; /* Larger font */
+            box-shadow: 4px 4px 0px #000;
+            border: 2px solid #000;
+            padding: 10px 25px;
+            font-size: 14px;
             cursor: pointer;
             position: relative;
-            margin-top: 25px; /* More spacing */
+            margin-top: 20px;
             font-family: 'Press Start 2P', cursive;
             color: white;
             text-transform: uppercase;
@@ -62,9 +54,97 @@
 
         .pixel-btn:active {
             box-shadow: none;
-            transform: translate(6px, 6px);
+            transform: translate(4px, 4px);
+        }
+
+        /* Media Query for screens between 1496px to 642px */
+        @media (max-width: 1496px) and (min-width: 642px) {
+            /* Popup container */
+            .popup-container {
+                padding: 40px; /* Bigger padding */
+                width: 500px; /* Larger width */
+                font-size: 16px; /* Larger font size */
+            }
+
+            /* Pixel button */
+            .pixel-btn {
+                padding: 20px 40px; /* Larger button */
+                font-size: 18px; /* Larger font */
+            }
+
+            /* Slider label */
+            .slider-label {
+                font-size: 16px; /* Larger label font */
+            }
+
+            /* Pixel slider */
+            .pixel-slider {
+                width: 90%; /* Larger slider width */
+                height: 15px; /* Larger slider height */
+            }
+
+            /* Slider thumb */
+            .pixel-slider::-webkit-slider-thumb {
+                width: 30px; /* Larger thumb */
+                height: 30px; /* Larger thumb */
+            }
+
+            .pixel-slider::-moz-range-thumb {
+                width: 30px; /* Larger thumb */
+                height: 30px; /* Larger thumb */
+            }
+        }
+
+        /* Media Query for screens below 542px */
+        @media (max-width: 542px) {
+            /* Popup container */
+            .popup-container {
+                padding: 15px; /* Smaller padding */
+                width: 250px; /* Smaller width */
+                font-size: 12px; /* Smaller font size */
+            }
+
+            /* Pixel button */
+            .pixel-btn {
+                padding: 8px 16px; /* Smaller button */
+                font-size: 12px; /* Smaller font */
+            }
+
+            /* Slider label */
+            .slider-label {
+                font-size: 10px; /* Smaller label font */
+            }
+
+            /* Pixel slider */
+            .pixel-slider {
+                width: 60%; /* Smaller slider width */
+                height: 10px; /* Smaller slider height */
+            }
+
+            /* Slider thumb */
+            .pixel-slider::-webkit-slider-thumb {
+                width: 18px; /* Smaller thumb */
+                height: 18px; /* Smaller thumb */
+            }
+
+            .pixel-slider::-moz-range-thumb {
+                width: 18px; /* Smaller thumb */
+                height: 18px; /* Smaller thumb */
+            }
         }
     </style>
+</head>
+<body>
+
+    <div class="popup-container">
+        <p>Hi, I'm Gochi and I like doughnuts..<br>Would you help me get some??</p>
+
+        <!-- Image that switches between idle.png and open.png -->
+        <img id="gochi-image" class="popup-image" src="../idle.png" alt="Idle Gochi">
+
+        <button class="pixel-btn" onclick="openTargetPage()">Sure</button>
+    </div>
+
     <script>
         function openTargetPage() {
             window.location.href = 'target.html';
@@ -78,17 +158,6 @@
         // Switch images every 700ms
         setInterval(toggleImage, 700);
     </script>
-</head>
-<body>
-
-    <div class="popup-container">
-        <p>Hi, I'm Gochi and I like doughnuts..<br>Would you help me get some??</p>
-
-        <!-- Bigger image -->
-        <img id="gochi-image" class="popup-image" src="../idle.png" alt="Idle Gochi">
-
-        <button class="pixel-btn" onclick="openTargetPage()">Sure</button>
-    </div>
 
 </body>
 </html>
