@@ -69,6 +69,14 @@
         function openTargetPage() {
             window.location.href = 'target.html';
         }
+
+        function toggleImage() {
+            const imgElement = document.getElementById("gochi-image");
+            imgElement.src = imgElement.src.includes("idle.png") ? "../open.png" : "../idle.png";
+        }
+
+        // Switch images every 700ms
+        setInterval(toggleImage, 700);
     </script>
 </head>
 <body>
@@ -76,8 +84,8 @@
     <div class="popup-container">
         <p>Hi, I'm Gochi and I like doughnuts..<br>Would you help me get some??</p>
 
-        <!-- Image updated to idle.png -->
-        <img class="popup-image" src="../idle.png" alt="Idle Gochi">
+        <!-- Image that switches between idle.png and open.png -->
+        <img id="gochi-image" class="popup-image" src="../idle.png" alt="Idle Gochi">
 
         <button class="pixel-btn" onclick="openTargetPage()">Sure</button>
     </div>
