@@ -3,170 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixelated Sliding Bar with Settings</title>
+    <title>Google Fit Step Counter</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://apis.google.com/js/api.js" async defer></script>
     <style>
         body {
-            background: #FFDE9B;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
+            background-color: #FFDE9B;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        .progress-container {
+            width: 80%;
+            height: 30px;
+            background-color: #ddd;
+            border: 3px solid #000;
+            border-radius: 10px;
+            margin: 20px auto;
+            overflow: hidden;
             position: relative;
         }
 
-        .top-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #ff5733;
+            transition: width 0.3s ease-in-out;
+        }
+
+        #donutPointer {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: -10px;
+            left: 0;
+            transition: left 0.3s ease-in-out;
+        }
+
+        .character-container {
+            text-align: center;
             margin-top: 20px;
         }
 
-        .middle-image {
-            width: 120px;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        #character {
+            width: 80px;
+            transition: transform 0.3s ease-in-out;
         }
 
-        .container {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 0 10px;
-            box-sizing: border-box;
-            position: relative;
-        }
-
-        .slider-container {
-            width: 250px;
-            height: 40px;
-            background: #FFF5D1;
-            border-radius: 5px;
-            border: 3px solid #E0A96D;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        .slider-bar {
-            height: 100%;
-            width: 0%;
-            background: repeating-linear-gradient(
-                45deg, 
-                #FF69B4 0px, #FF69B4 10px, 
-                #B0B0B0 10px, #B0B0B0 20px
-            );
-            transition: width 0.5s ease-in-out, background 0.5s ease-in-out;
-            image-rendering: pixelated;
-        }
-
-        .icon-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            height: 80px;
-            margin-left: 10px;
-        }
-
-        .icon-box {
-            width: 40px;
-            height: 40px;
-            background: #FFF5D1;
-            border: 3px solid #E0A96D;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 22px;
-            font-weight: bold;
-            text-align: center;
-            color: #333;
+        .pixel-btn {
+            background-color: #fff;
+            border: 2px solid #000;
+            padding: 10px;
+            font-size: 14px;
             cursor: pointer;
-            image-rendering: pixelated;
-        }
-
-        .doughnut-box {
-            margin-top: 10px;
-            pointer-events: none; /* Initially disable clicking */
-            opacity: 0.5; /* Make it look disabled */
-        }
-
-        .icon-box:hover {
-            background: repeating-linear-gradient(
-                45deg, 
-                #FF69B4 0px, #FF69B4 5px, 
-                #B0B0B0 5px, #B0B0B0 10px
-            );
-        }
-
-        .active {
-            pointer-events: auto !important; /* Enable clicking */
-            opacity: 1 !important; /* Restore visibility */
         }
     </style>
 </head>
 <body>
+    <h2>Google Fit Step Tracker</h2>
+    <button id="signInButton" class="pixel-btn">Sign in with Google</button>
+    <p id="stepCounter">Steps: 0</p>
 
-    <div class="top-container">
-        <div class="container">
-            <div class="slider-container">
-                <div class="slider-bar" id="slider"></div>
-            </div>
-            
-            <div class="icon-container">
-                <div class="icon-box" onclick="window.location.href='settings.html'">⚙</div> 
-                <div class="icon-box doughnut-box" id="doughnutButton" onclick="startEating()">🍩</div>
-            </div>
-        </div>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <img src="../eat.png" id="foodImage" alt="Eat Icon" class="middle-image">
+    <div class="character-container">
+        <img id="character" src="character.png" alt="Character">
+    </div>
 
     <script>
-        function updateBar(value) {
-            const bar = document.getElementById("slider");
-            const doughnutButton = document.getElementById("doughnutButton");
+        const CLIENT_ID = "515345527131-r1pmgec89gr6uuv4sadk2vtunklqtum7.apps.googleusercontent.com";
+        const SCOPES = "https://www.googleapis.com/auth/fitness.activity.read";
+        let accessToken = null;
 
-            bar.style.width = value + "%";
-            
-            if (value >= 50) {
-                bar.style.background = "navy";
-                doughnutButton.classList.add("active"); // Enable button
-            } else {
-                bar.style.background = "repeating-linear-gradient(45deg, #FF69B4 0px, #FF69B4 10px, #B0B0B0 10px, #B0B0B0 20px)";
-                doughnutButton.classList.remove("active"); // Disable button
-            }
+        function initAuth() {
+            const tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: CLIENT_ID,
+                scope: SCOPES,
+                callback: (response) => {
+                    if (response.error) {
+                        console.error("Auth failed", response);
+                        return;
+                    }
+                    accessToken = response.access_token;
+                    getStepData();
+                },
+            });
+            document.getElementById("signInButton").addEventListener("click", () => {
+                tokenClient.requestAccessToken();
+            });
         }
 
-        let progress = 0;
-        setInterval(() => {
-            progress = (progress + 10) % 101;
-            updateBar(progress);
-        }, 2000);
-
-        function startEating() {
-            const doughnutButton = document.getElementById("doughnutButton");
-            if (!doughnutButton.classList.contains("active")) return; // Prevent clicking early
-
-            const image = document.getElementById("foodImage");
-            const images = ["../nom.png", "../doonut.png", "../eat.png"];
-            let count = 0;
-
-            function cycleImages() {
-                if (count < 9) {
-                    image.src = images[count % 3];
-                    count++;
-                    setTimeout(cycleImages, 500);
+        function getStepData() {
+            fetch("https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    aggregateBy: [{
+                        dataTypeName: "com.google.step_count.delta",
+                        dataSourceId: "derived:com.google.step_count.delta:com.google.android.gms:estimated_steps"
+                    }],
+                    bucketByTime: {durationMillis: 86400000},
+                    startTimeMillis: Date.now() - 86400000,
+                    endTimeMillis: Date.now()
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                let steps = 0;
+                if (data.bucket && data.bucket.length > 0) {
+                    data.bucket.forEach(bucket => {
+                        if (bucket.dataset && bucket.dataset.length > 0) {
+                            bucket.dataset.forEach(dataset => {
+                                if (dataset.point && dataset.point.length > 0) {
+                                    dataset.point.forEach(point => {
+                                        if (point.value && point.value.length > 0) {
+                                            steps += point.value[0].intVal;
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
                 }
-            }
-            cycleImages();
+                document.getElementById("stepCounter").innerText = `Steps: ${steps}`;
+                updateProgressBar(steps);
+            })
+            .catch(error => console.error("Error fetching step data:", error));
         }
+
+        function updateProgressBar(steps) {
+            const stepGoal = 10000;
+            const progress = Math.min((steps / stepGoal) * 100, 100);
+            document.getElementById("progressBar").style.width = `${progress}%`;
+        }
+
+        window.onload = initAuth;
     </script>
 </body>
 </html>
