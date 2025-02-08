@@ -42,17 +42,19 @@
 
         .pixel-btn {
             background-color: #fff;
-            box-shadow: 2px 2px 0px #000;
-            border: 2px solid #000;
-            padding: 5px 10px;
-            font-size: 12px;
+            box-shadow: 4px 4px 0px #000;
+            border: 4px solid #000;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-family: 'Press Start 2P', cursive;
             cursor: pointer;
             margin-top: 10px;
+            text-transform: uppercase;
         }
 
         .pixel-btn:active {
             box-shadow: none;
-            transform: translate(2px, 2px);
+            transform: translate(4px, 4px);
         }
 
         /* Pixelated Slider */
@@ -116,7 +118,8 @@
             <input type="range" min="0" max="10000" value="5000" class="pixel-slider" id="targetSlider">
         </div>
 
-        <button class="pixel-btn" onclick="closePopup()">Close</button>
+        <!-- Redirects to bunny.html -->
+        <button class="pixel-btn" onclick="redirectToBunny()">Continue</button>
     </div>
 
     <script>
@@ -126,6 +129,10 @@
 
         function closePopup() {
             document.getElementById("popup").classList.remove("show");
+        }
+
+        function redirectToBunny() {
+            window.location.href = "bunny.html";
         }
 
         // Update slider value display
