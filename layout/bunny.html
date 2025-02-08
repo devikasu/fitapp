@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixelated Sliding Bar with Settings</title>
+    <style>
+        body {
+            background: #FFDE9B;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Keeps slider and settings icon aligned */
+            margin-top: 20px; /* Space from the top */
+            padding: 0 10px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .slider-container {
+            width: 80%;
+            height: 30px;
+            background: #FFF5D1;
+            border-radius: 5px;
+            border: 3px solid #E0A96D;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            margin-left: 5%; /* Shifts the sliding bar slightly to the right */
+        }
+
+        .slider-bar {
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg, 
+                #FF69B4 0px, #FF69B4 10px, 
+                #B0B0B0 10px, #B0B0B0 20px
+            );
+            transition: width 0.5s ease-in-out;
+            image-rendering: pixelated;
+        }
+
+        .icon-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-left: 10px; /* Keeps it aligned with the slider */
+        }
+
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            background: #FFF5D1;
+            border: 3px solid #E0A96D;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px; /* Bigger icon */
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+            cursor: pointer;
+            image-rendering: pixelated;
+        }
+
+        .doughnut-box {
+            margin-top: 10px; /* Space between settings and doughnut */
+        }
+
+        .icon-box:hover {
+            background: repeating-linear-gradient(
+                45deg, 
+                #FF69B4 0px, #FF69B4 5px, 
+                #B0B0B0 5px, #B0B0B0 10px
+            );
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="slider-container">
+            <div class="slider-bar" id="slider"></div>
+        </div>
+        
+        <div class="icon-container">
+            <div class="icon-box">⚙️</div> <!-- Settings Icon -->
+            <div class="icon-box doughnut-box">🍩</div> <!-- Doughnut Icon -->
+        </div>
+    </div>
+
+    <script>
+        function updateBar(value) {
+            const bar = document.getElementById("slider");
+            bar.style.width = value + "%";
+        }
+
+        // Simulate data-driven updates
+        let progress = 0;
+        setInterval(() => {
+            progress = (progress + 10) % 101; // Loop from 0 to 100
+            updateBar(progress);
+        }, 2000);
+    </script>
+
+</body>
+</html>
