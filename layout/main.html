@@ -38,7 +38,12 @@
             align-items: center;
             position: relative;
             line-height: 1.6;
-            animation: bounce 1.5s infinite ease-in-out;
+            animation: bounce 1.5s infinite ease-in-out; /* Bouncing effect */
+        }
+
+        .popup-image {
+            width: 120px; /* Adjust size as needed */
+            margin: 10px 0; /* Space between text and button */
         }
 
         .pixel-btn {
@@ -59,19 +64,6 @@
             box-shadow: none;
             transform: translate(4px, 4px);
         }
-
-        .character {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 100px;
-            animation: wave 1s infinite alternate ease-in-out;
-        }
-
-        @keyframes wave {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(5deg); }
-        }
     </style>
     <script>
         function openTargetPage() {
@@ -83,10 +75,12 @@
 
     <div class="popup-container">
         <p>Hi, I'm Gochi and I like doughnuts..<br>Would you help me get some??</p>
+
+        <!-- Image updated to idle.png -->
+        <img class="popup-image" src="../idle.png" alt="Idle Gochi">
+
         <button class="pixel-btn" onclick="openTargetPage()">Sure</button>
     </div>
-
-    <img class="character" src="character.gif" alt="Gochi waving">
 
 </body>
 </html>
