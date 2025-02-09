@@ -150,7 +150,7 @@
     <button id="evaluateButton" class="pixel-btn">Evaluate Pixelated</button>
 
     <script>
-        const CLIENT_ID = "515345527131-r1pmgec89gr6uuv4sadk2vtunklqtum7.apps.googleusercontent.com";
+        const CLIENT_ID = "http://515345527131-r1pmgec89gr6uuv4sadk2vtunklqtum7.apps.googleusercontent.com";
         const SCOPES = "https://www.googleapis.com/auth/fitness.activity.read";
         let accessToken = null;
         let targetValue = 10000; // Default target, will be updated by the query string
@@ -166,28 +166,28 @@
             }
         }
 
-        function initAuth() {
-            const tokenClient = google.accounts.oauth2.initTokenClient({
-                client_id: CLIENT_ID,
-                scope: SCOPES,
-                callback: (response) => {
-                    if (response.error) {
-                        console.error("Auth failed", response);
-                        return;
-                    }
-                    accessToken = response.access_token;
-                    document.getElementById("popup").style.display = "none";
-                    document.getElementById("progressContainer").style.display = "block";
-                    document.getElementById("stepCounter").style.display = "block";
-                    document.getElementById("cookieButton").style.display = "inline-block"; // Show the cookie button
-                    document.getElementById("evaluateButton").style.display = "inline-block"; // Show the evaluate button
-                    getStepData();
-                },
-            });
+        function initAuth() {  
+    const tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: (response) => {
+            if (response.error) {
+                console.error("Auth failed", response);
+                return;
+            }
+            accessToken = response.access_token;
+            getStepData(); // Call the API after successful authentication
+        },
+    });
+
+    document.getElementById("signInButton").addEventListener("click", () => {
+        tokenClient.requestAccessToken();
+    });
+}
             document.getElementById("signInButton").addEventListener("click", () => {
-                tokenClient.requestAccessToken();
+                tokenClient.requestAccessToken({prompt:"select account"});
             });
-        }
+        
 
         function getStepData() {
             fetch("https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate", {
