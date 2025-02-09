@@ -12,17 +12,20 @@
             text-align: center;
             font-family: Arial, sans-serif;
             margin: 50px;
+            position: relative;
         }
 
+        /* Fixed width for the progress bar */
         .progress-container {
-            width: 80%;
-            height: 30px;
+            width: 300px;  /* Fixed width for the progress bar */
+            height: 20px;
             background-color: #ddd;
             border: 3px solid #000;
             border-radius: 10px;
             margin: 20px auto;
             overflow: hidden;
             position: relative;
+            display: none;
         }
 
         .progress-bar {
@@ -32,23 +35,22 @@
             transition: width 0.3s ease-in-out;
         }
 
-        #donutPointer {
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            top: -10px;
-            left: 0;
-            transition: left 0.3s ease-in-out;
+        #stepCounter {
+            font-size: 20px;
+            margin-top: 10px;
+            display: none;
         }
 
-        .character-container {
+        #popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 2px solid #000;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
-            margin-top: 20px;
-        }
-
-        #character {
-            width: 80px;
-            transition: transform 0.3s ease-in-out;
         }
 
         .pixel-btn {
@@ -58,25 +60,86 @@
             font-size: 14px;
             cursor: pointer;
         }
+
+        /* Cookie button styles */
+        #cookieButton {
+            font-size: 30px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 20px;
+            display: none;  /* Initially hidden */
+            transition: transform 0.6s ease-in-out; /* Smooth bounce effect */
+            margin-top: 10px; /* Space above the cookie */
+        }
+
+        #cookieButton:hover {
+            transform: scale(1.1);
+        }
+
+        #cookieButton:active {
+            transform: scale(0.9);
+        }
+
+        /* Center image styling */
+        #centerImage {
+            width: 150px;
+            height: 150px;
+            display: none; /* Initially hidden */
+            margin-top: 20px; /* Add some space between cookie and image */
+            margin-left: auto;
+            margin-right: auto;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Additional style for vertical movement */
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px); /* Adjust this value for the height of the bounce */
+            }
+        }
     </style>
 </head>
 <body>
-    <h2>Google Fit Step Tracker</h2>
-    <button id="signInButton" class="pixel-btn">Sign in with Google</button>
+    <div id="popup">
+        <h2>Google Fit Step Tracker</h2>
+        <button id="signInButton" class="pixel-btn">Sign in with Google</button>
+    </div>
+
     <p id="stepCounter">Steps: 0</p>
 
-    <div class="progress-container">
+    <div class="progress-container" id="progressContainer">
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <div class="character-container">
-        <img id="character" src="character.png" alt="Character">
-    </div>
+    <!-- Cookie Button placed above the image -->
+    <button id="cookieButton" class="pixel-btn">🍪</button>
+
+    <!-- Center Image placed below the cookie -->
+    <img src="../eat.png" id="centerImage" alt="Eat" />
 
     <script>
         const CLIENT_ID = "515345527131-r1pmgec89gr6uuv4sadk2vtunklqtum7.apps.googleusercontent.com";
         const SCOPES = "https://www.googleapis.com/auth/fitness.activity.read";
         let accessToken = null;
+        let targetValue = 10000; // Default target, will be updated by the query string
+        let clickCount = 0; // Counter for the image change loop
+
+        // Extract target value from the URL query string
+        function getTargetFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const target = urlParams.get('target');
+            if (target) {
+                targetValue = parseInt(target, 10);
+            }
+        }
 
         function initAuth() {
             const tokenClient = google.accounts.oauth2.initTokenClient({
@@ -88,6 +151,10 @@
                         return;
                     }
                     accessToken = response.access_token;
+                    document.getElementById("popup").style.display = "none";
+                    document.getElementById("progressContainer").style.display = "block";
+                    document.getElementById("stepCounter").style.display = "block";
+                    document.getElementById("cookieButton").style.display = "inline-block"; // Show the cookie button
                     getStepData();
                 },
             });
@@ -131,19 +198,55 @@
                         }
                     });
                 }
-                document.getElementById("stepCounter").innerText = `Steps: ${steps}`;
+                document.getElementById("stepCounter").innerText = `Steps: ${steps} / ${targetValue}`;
                 updateProgressBar(steps);
             })
             .catch(error => console.error("Error fetching step data:", error));
         }
 
         function updateProgressBar(steps) {
-            const stepGoal = 10000;
-            const progress = Math.min((steps / stepGoal) * 100, 100);
+            const progress = Math.min((steps / targetValue) * 100, 100); // Use targetValue from the URL
             document.getElementById("progressBar").style.width = `${progress}%`;
+
+            // Show bounce effect and enable the cookie button when the bar is full
+            if (progress === 100) {
+                document.getElementById("cookieButton").classList.add("bounce");
+                document.getElementById("cookieButton").disabled = false;
+                document.getElementById("centerImage").style.display = "block"; // Show the image
+            }
         }
 
-        window.onload = initAuth;
+        document.getElementById("cookieButton").addEventListener("click", () => {
+            changeImages();
+        });
+
+        function changeImages() {
+            let images = ["../eat.png", "../nom.png", "../doonut.png"];
+            let imageIndex = 0;
+
+            // Loop through the images three times
+            let imageElement = document.getElementById("centerImage");
+            const interval = setInterval(() => {
+                imageElement.src = images[imageIndex];
+                imageIndex = (imageIndex + 1) % images.length;
+
+                // After 3 times, stop the loop and reset to eat.png
+                if (imageIndex === 0) {
+                    clickCount++;
+                    if (clickCount === 3) {
+                        clearInterval(interval);
+                        imageElement.src = "../eat.png";  // Reset to the original image
+                        clickCount = 0; // Reset the counter
+                    }
+                }
+            }, 500); // Change the image every 500ms
+        }
+
+        // Initialize everything
+        window.onload = () => {
+            getTargetFromURL(); // Extract target value from URL query
+            initAuth();
+        };
     </script>
 </body>
 </html>

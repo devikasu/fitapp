@@ -155,8 +155,10 @@
         }
 
         function redirectToBunny() {
-            window.location.href = "bunny.html";
-        }
+    const targetValue = document.getElementById("targetSlider").value;
+    window.location.href = `bunny.html?target=${targetValue}`;
+    }
+
 
         const slider = document.getElementById("targetSlider");
         const output = document.getElementById("targetValue");
