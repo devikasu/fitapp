@@ -180,10 +180,7 @@
         },
     });
 
-    document.getElementById("signInButton").addEventListener("click", () => {
-        tokenClient.requestAccessToken();
-    });
-}
+
             document.getElementById("signInButton").addEventListener("click", () => {
                 tokenClient.requestAccessToken({prompt:"select account"});
             });
